@@ -1,12 +1,18 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using NomadDashboardAPI.Contexts;
+using NomadDashboardAPI.Interfaces;
+using NomadDashboardAPI.Models;
+using NomadDashboardAPI.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +38,24 @@ namespace NomadDashboardAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "NomadDashboardAPI", Version = "v1" });
             });
+
+            services.AddDbContext<UserContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Default")));
+
+
+            services.AddIdentityCore<User>().AddRoles<IdentityRole>().AddEntityFrameworkStores<UserContext>();
+
+
+            services.Configure<IdentityOptions>(opt =>
+            {
+                opt.Password.RequireDigit = false;
+                opt.Password.RequireLowercase = false;
+                opt.Password.RequireUppercase = false;
+                opt.Password.RequireNonAlphanumeric = false;
+            }
+            );
+
+            services.AddScoped<IUser, UserService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
