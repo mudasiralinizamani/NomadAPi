@@ -26,7 +26,7 @@ namespace NomadDashboardAPI.Models
         public string LastIp { get; set; }
 
         [Required]
-        public DateTime CreatedAt { get; set; }
+        public string CreatedAt { get; set; }
 
         [Required]
         public string ProfilePic { get; set; }

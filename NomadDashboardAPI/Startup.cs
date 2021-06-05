@@ -17,6 +17,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+
+
 
 namespace NomadDashboardAPI
 {
@@ -32,6 +38,9 @@ namespace NomadDashboardAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Injecting AppSettings
+            services.Configure<AppSettings>(Configuration.GetSection("ApplcationSettings"));
+
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -39,6 +48,7 @@ namespace NomadDashboardAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "NomadDashboardAPI", Version = "v1" });
             });
 
+            // Adding UserDb Context
             services.AddDbContext<UserContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Default")));
 
 
@@ -54,7 +64,35 @@ namespace NomadDashboardAPI
             }
             );
 
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             services.AddScoped<IUser, UserService>();
+
+
+            // JWT Authentication Configration - Mudasir Ali
+
+            var Key = Encoding.UTF8.GetBytes(Configuration["ApplcationSettings:JET_SECRECT_KEY"].ToString());
+
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = false;
+                x.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ClockSkew = TimeSpan.Zero,
+                };
+            });
+
+            services.AddCors();
 
         }
 
@@ -71,6 +109,10 @@ namespace NomadDashboardAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(m => m.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
