@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace NomadDashboardAPI.Migrations
 {
-    public partial class InitialMigrations : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -31,7 +31,7 @@ namespace NomadDashboardAPI.Migrations
                     LastName = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: true),
                     LastIp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedAt = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ProfilePic = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),

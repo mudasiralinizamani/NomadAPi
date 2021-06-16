@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Programs\\Projects\\Dotnet\\NomadDashboardAPI\\NomadDashboardAPI\\NomadDashboardAPI.csproj": {}
+    "E:\\Programs\\Projects\\Dotnet\\NomadDashboardAPI\\NomadDashboardAPI\\NomadDashboardAPI.csproj": {}
   },
   "projects": {
-    "D:\\Programs\\Projects\\Dotnet\\NomadDashboardAPI\\NomadDashboardAPI\\NomadDashboardAPI.csproj": {
+    "E:\\Programs\\Projects\\Dotnet\\NomadDashboardAPI\\NomadDashboardAPI\\NomadDashboardAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Programs\\Projects\\Dotnet\\NomadDashboardAPI\\NomadDashboardAPI\\NomadDashboardAPI.csproj",
+        "projectUniqueName": "E:\\Programs\\Projects\\Dotnet\\NomadDashboardAPI\\NomadDashboardAPI\\NomadDashboardAPI.csproj",
         "projectName": "NomadDashboardAPI",
-        "projectPath": "D:\\Programs\\Projects\\Dotnet\\NomadDashboardAPI\\NomadDashboardAPI\\NomadDashboardAPI.csproj",
-        "packagesPath": "C:\\Users\\Mudasir Ali Nizamani\\.nuget\\packages\\",
-        "outputPath": "D:\\Programs\\Projects\\Dotnet\\NomadDashboardAPI\\NomadDashboardAPI\\obj\\",
+        "projectPath": "E:\\Programs\\Projects\\Dotnet\\NomadDashboardAPI\\NomadDashboardAPI\\NomadDashboardAPI.csproj",
+        "packagesPath": "C:\\Users\\Mudasir\\.nuget\\packages\\",
+        "outputPath": "E:\\Programs\\Projects\\Dotnet\\NomadDashboardAPI\\NomadDashboardAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Mudasir Ali Nizamani\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Mudasir\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

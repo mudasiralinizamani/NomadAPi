@@ -10,9 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using NomadDashboardAPI.Contexts;
-using NomadDashboardAPI.Interfaces;
 using NomadDashboardAPI.Models;
-using NomadDashboardAPI.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,8 +63,6 @@ namespace NomadDashboardAPI
             );
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
-            services.AddScoped<IUser, UserService>();
 
 
             // JWT Authentication Configration - Mudasir Ali

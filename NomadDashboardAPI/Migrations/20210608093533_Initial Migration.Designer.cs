@@ -10,8 +10,8 @@ using NomadDashboardAPI.Contexts;
 namespace NomadDashboardAPI.Migrations
 {
     [DbContext(typeof(UserContext))]
-    [Migration("20210605134154_Changed Type of CreateAt in User Model")]
-    partial class ChangedTypeofCreateAtinUserModel
+    [Migration("20210608093533_Initial Migration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
