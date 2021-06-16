@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -6,7 +6,6 @@ using Microsoft.IdentityModel.Tokens;
 using NomadDashboardAPI.Models;
 using NomadDashboardAPI.ViewModels;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -15,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace NomadDashboardAPI.Controllers
 {
-    // api/auth/ - Route
+    // Route = api/auth/
     [Route("api/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
@@ -31,8 +30,7 @@ namespace NomadDashboardAPI.Controllers
             _appSettings = appSettings;
         }
 
-
-        // For Creating User as Empployee
+        // For Creating User as Empployee - Mudasir Ali
         // Route = /api/Auth/Employee/
         [HttpPost]
         [Route("Employee")]
@@ -57,25 +55,77 @@ namespace NomadDashboardAPI.Controllers
                     ProfilePic = model.ProfilePic,
                 };
 
+                try
+                {
+                    var result = await _userManager.CreateAsync(appUser, model.Password);
+                    // To Create a new Employee Role - Mudasir Ali
+                    //IdentityRole newRole = new IdentityRole()
+                    //{
+                    //    Name = "Employee"
+                    //};
+                    if (result.Succeeded)
+                    {
+                        //await _roleManager.CreateAsync(newRole);
+                        var role = await _userManager.AddToRoleAsync(appUser, "Employee");
+                    }
+
+                    return Ok(result);
+                }
+                catch (Exception)
+                {
+                    return Ok(new { succeeded = false, code = "ServerError", description = "Something went wrong in the Server !" });
+                }
+            }
+            else
+            {
+                return Ok(new { succeeded = false, error = "DuplicateEmail", description = "Email '" + model.Email + "` is already taken" });
+            }
+        }
+
+        // For Creating User as Client - Mudasir Ali
+        // Route = /api/Auth/Client/
+        [HttpPost]
+        [Route("Client")]
+        public async Task<object> Client(ClientSignupModel model)
+        {
+            string currentDate = DateTime.Now.ToString("d/M/yyyy");
+
+            var email = await _userManager.FindByEmailAsync(model.Email);
+
+            if (email == null)
+            {
+                var appUser = new User()
+                {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    IsActive = false,
+                    CreatedAt = currentDate,
+                    Email = model.Email,
+                    LastIp = "",
+                    PhoneNumber = model.PhoneNumber,
+                    UserName = model.UserName,
+                    ProfilePic = model.ProfilePic,
+                };
 
                 try
                 {
                     var result = await _userManager.CreateAsync(appUser, model.Password);
-                    IdentityRole newRole = new IdentityRole()
-                    {
-                        Name = "Employee"
-                    };
+                    // To Create a new Client Role - Mudasir Ali
+                    //IdentityRole newRole = new IdentityRole()
+                    //{
+                    //    Name = "Client"
+                    //};
                     if (result.Succeeded)
                     {
-                        await _roleManager.CreateAsync(newRole);
-                        var role = await _userManager.AddToRoleAsync(appUser, "Employee");
+                        //await _roleManager.CreateAsync(newRole);
+                        var role = await _userManager.AddToRoleAsync(appUser, "Client");
                     }
 
-                    return Ok(new { succeeded = true, result = result });
+                    return Ok(result);
                 }
                 catch (Exception)
                 {
-                    return Ok(new { succeeded = false, code = "ServerError", description = "Something went wrong in the Server !" } );
+                    return Ok(new { succeeded = false, code = "ServerError", description = "Something went wrong in the Server !" });
                 }
             }
             else
@@ -99,7 +149,7 @@ namespace NomadDashboardAPI.Controllers
                 }
                 else if (user != null && !user.IsActive)
                 {
-                    return Ok(new { succeeded = false, code = "NotActivated", description = "Your Account is not Activated '" + model.UserName + "', wait for your Account to be Activated" });
+                    return Ok(new { succeeded = false, code = "NotActivated", description = "Your Account is not Activated '" + model.UserName + "'" });
                 }
                 else if (user != null && !password)
                 {
@@ -134,5 +184,23 @@ namespace NomadDashboardAPI.Controllers
             }
         }
 
+        // This is Fucntion will return the user by token - Mudasir Ali
+        // Route = /api/Auth/GetUser/
+        [HttpGet]
+        [Authorize]
+        [Route("GetUser")]
+        public async Task<object> GetUser()
+        {
+            string userId = User.Claims.First(i => i.Type == "UserID").Value;
+            try
+            {
+                var user = await _userManager.FindByIdAsync(userId);
+                return Ok(new { succeeded = true, user = user });
+            }
+            catch (Exception)
+            {
+                return Ok(new { succeeded = false, code = "ServerError", description = "Something went wrong in Server !" });
+            }
+        }
     }
 }
