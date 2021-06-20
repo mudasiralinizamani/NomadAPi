@@ -10,6 +10,10 @@ namespace NomadDashboardAPI.Contexts
 {
     public class UserContext : IdentityDbContext
     {
+        public UserContext()
+        {
+        }
+
         public UserContext(DbContextOptions options) : base(options)
         {
         }
