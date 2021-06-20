@@ -111,13 +111,13 @@ namespace NomadDashboardAPI.Controllers
                 {
                     var result = await _userManager.CreateAsync(appUser, model.Password);
                     // To Create a new Client Role - Mudasir Ali
-                    //IdentityRole newRole = new IdentityRole()
-                    //{
+                    // IdentityRole newRole = new IdentityRole()
+                    // {
                     //    Name = "Client"
-                    //};
+                    // };
                     if (result.Succeeded)
                     {
-                        //await _roleManager.CreateAsync(newRole);
+                        // await _roleManager.CreateAsync(newRole);
                         var role = await _userManager.AddToRoleAsync(appUser, "Client");
                     }
 
