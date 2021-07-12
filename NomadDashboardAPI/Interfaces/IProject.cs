@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace NomadDashboardAPI.Interfaces
 {
-    public interface ILead
+    interface IProject
     {
-        IEnumerable<Lead> GetAllLeads();
+        IEnumerable<Project> GetAllProject();
 
-        Lead GetLeadById(string id);
+        Project GetProjectById();
+
     }
 }
