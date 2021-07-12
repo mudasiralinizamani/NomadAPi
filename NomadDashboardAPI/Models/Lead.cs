@@ -9,7 +9,7 @@ namespace NomadDashboardAPI.Models
     public class Lead
     {
         [Key]
-        public string id { get; set; }
+        public string Id { get; set; }
 
         [Required]
         [MaxLength(50)]
