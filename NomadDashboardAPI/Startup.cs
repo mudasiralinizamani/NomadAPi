@@ -19,8 +19,8 @@ using AutoMapper;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-
-
+using NomadDashboardAPI.Interfaces;
+using NomadDashboardAPI.Services;
 
 namespace NomadDashboardAPI
 {
@@ -39,6 +39,8 @@ namespace NomadDashboardAPI
             // Injecting AppSettings
             services.Configure<AppSettings>(Configuration.GetSection("ApplcationSettings"));
 
+            // Dependency Injection
+            services.AddScoped<ILead, ILeadService>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -48,6 +50,8 @@ namespace NomadDashboardAPI
 
             // Adding UserDb Context
             services.AddDbContext<UserContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Default")));
+            services.AddDbContext<APIContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Default")));
+
 
 
             services.AddIdentityCore<User>().AddRoles<IdentityRole>().AddEntityFrameworkStores<UserContext>();
