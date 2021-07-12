@@ -1,4 +1,5 @@
-﻿using NomadDashboardAPI.Interfaces;
+﻿using NomadDashboardAPI.Contexts;
+using NomadDashboardAPI.Interfaces;
 using NomadDashboardAPI.Models;
 using System;
 using System.Collections.Generic;
@@ -9,14 +10,23 @@ namespace NomadDashboardAPI.Services
 {
     public class ILeadService : ILead
     {
-        public IEnumerable<Lead> GetAllLeads()
+        private readonly APIContext _apiContext;
+
+        public ILeadService(APIContext apiContext)
         {
-            throw new NotImplementedException();
+            _apiContext = apiContext;
         }
 
-        public Lead GetLeadById()
+        public IEnumerable<Lead> GetAllLeads()
         {
-            throw new NotImplementedException();
+            IEnumerable<Lead> leads = _apiContext.Leads.ToList();
+            return leads;
+        }
+
+        public Lead GetLeadById(string id)
+        {
+            Lead lead = _apiContext.Leads.FirstOrDefault(l => l.Id == id);
+            return lead;
         }
     }
 }
