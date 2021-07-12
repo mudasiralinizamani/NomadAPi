@@ -48,7 +48,7 @@ namespace NomadDashboardAPI.Controllers
         // Route = /api/user/GetAllUsers/
         [HttpGet]
         [Route("GetAllUsers")]
-        public async Task<ActionResult> GetAllUsers()
+        public ActionResult GetAllUsers()
         {
             try
             {
@@ -89,7 +89,7 @@ namespace NomadDashboardAPI.Controllers
         // This method will return a number of total user in DataBase
         [HttpGet]
         [Route("GetAllUsersCount")]
-        public async Task<ActionResult> GetAllUsersCount()
+        public ActionResult GetAllUsersCount()
         {
             try
             {

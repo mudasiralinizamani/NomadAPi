@@ -78,7 +78,7 @@ namespace NomadDashboardAPI.Controllers
             }
             else
             {
-                return Ok(new { succeeded = false, error = "DuplicateEmail", description = "Email '" + model.Email + "` is already taken" });
+                return Ok(new { succeeded = false, error = "DuplicateEmail", description = "Email '" + model.Email + "' is already taken" });
             }
         }
 
