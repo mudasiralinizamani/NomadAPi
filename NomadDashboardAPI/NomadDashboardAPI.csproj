@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Compile Remove="Controllers\ValueController.cs" />
+    <Compile Remove="Controllers\ValuesController.cs" />
   </ItemGroup>
 
   <ItemGroup>
