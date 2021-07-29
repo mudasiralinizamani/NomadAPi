@@ -1,26 +1,19 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using NomadDashboardAPI.Contexts;
-using NomadDashboardAPI.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using NomadDashboardAPI.Interfaces;
+using NomadDashboardAPI.Models;
 using NomadDashboardAPI.Services;
+using System;
+using System.Text;
 
 namespace NomadDashboardAPI
 {
@@ -41,6 +34,9 @@ namespace NomadDashboardAPI
 
             // Dependency Injection
             services.AddScoped<ILead, ILeadService>();
+            services.AddScoped<INotifications, INotificationsService>();
+            services.AddScoped<IProject, IProjectService>();
+
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -52,10 +48,7 @@ namespace NomadDashboardAPI
             services.AddDbContext<UserContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Default")));
             services.AddDbContext<APIContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Default")));
 
-
-
             services.AddIdentityCore<User>().AddRoles<IdentityRole>().AddEntityFrameworkStores<UserContext>();
-
 
             services.Configure<IdentityOptions>(opt =>
             {
@@ -67,7 +60,6 @@ namespace NomadDashboardAPI
             );
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
 
             // JWT Authentication Configration - Mudasir Ali
 
@@ -93,7 +85,6 @@ namespace NomadDashboardAPI
             });
 
             services.AddCors();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

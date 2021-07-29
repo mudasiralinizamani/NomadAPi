@@ -1,12 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace NomadDashboardAPI.Models
+namespace NomadDashboardAPI.ViewModels
 {
-    public class Project
+    public class ProjectModel
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public string Id { get; set; }
-
         public string Name { get; set; }
 
         public string ClientId { get; set; }
@@ -23,4 +23,6 @@ namespace NomadDashboardAPI.Models
 
         public string DeadLine { get; set; }
     }
+
 }
+

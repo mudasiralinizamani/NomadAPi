@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Mvc;
+using NomadDashboardAPI.Interfaces;
+using NomadDashboardAPI.ViewModels;
 
 namespace NomadDashboardAPI.Controllers
 {
@@ -11,5 +8,29 @@ namespace NomadDashboardAPI.Controllers
     [ApiController]
     public class ProjectController : ControllerBase
     {
+        private readonly IProject _projectService;
+
+        public ProjectController(IProject projectService)
+        {
+            _projectService = projectService;
+        }
+
+        [HttpGet]
+        [Route("GetProjects")]
+        public ActionResult GetProjects()
+        {
+            var projects = _projectService.GetAllProject();
+            return Ok(projects);
+        }
+
+        [HttpPost]
+        [Route("AddProject")]
+        public ActionResult AddProjects(ProjectModel model)
+        {
+            _projectService.CreateProject(model);
+            _projectService.SaveChanges();
+            return Ok("created");
+        }
+
     }
 }

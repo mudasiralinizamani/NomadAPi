@@ -50,16 +50,16 @@ namespace NomadDashboardAPI.Controllers
         [Route("GetAllUsers")]
         public ActionResult GetAllUsers()
         {
-            try
-            {
-                var users = _userManager.Users;
+            // try
+            // {
+            var users = _userManager.Users;
 
-                return Ok(new { succeeded = true, users = users });
-            }
-            catch (Exception)
-            {
-                return Ok(new { succeeded = false, code = "ServerError", description = "Something went wrong in Server !" });
-            }
+            return Ok(users);
+            // }
+            // catch (Exception)
+            // {
+            //     return Ok(new { succeeded = false, code = "ServerError", description = "Something went wrong in Server !" });
+            // }
         }
 
         // Route = /api/User/GetUserByUserName/
