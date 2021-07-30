@@ -13,6 +13,17 @@ namespace NomadDashboardAPI.Interfaces
 
         Project GetProjectById(string id);
 
+        IEnumerable<Project> GetInProgressProjects();
+
+        IEnumerable<Project> GetNotStartedProjects();
+
+        IEnumerable<Project> GetOnHoldProjects();
+
+        IEnumerable<Project> GetCancelledProjects();
+
+        IEnumerable<Project> GetFinishedProjects();
+
+
         bool SaveChanges();
 
 

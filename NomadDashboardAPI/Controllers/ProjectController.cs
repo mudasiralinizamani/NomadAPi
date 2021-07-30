@@ -21,7 +21,7 @@ namespace NomadDashboardAPI.Controllers
         {
             var projects = _projectService.GetAllProject();
             return Ok(projects);
-        }
+        }   
 
         [HttpPost]
         [Route("AddProject")]
@@ -30,6 +30,41 @@ namespace NomadDashboardAPI.Controllers
             _projectService.CreateProject(model);
             _projectService.SaveChanges();
             return Ok("created");
+        }
+
+        [HttpGet]
+        [Route("GetInProgressProjects")]
+        public ActionResult GetInProgressProjects()
+        {
+            return Ok(_projectService.GetInProgressProjects());
+        }
+
+        [HttpGet]
+        [Route("GetNotStartedProjects")]
+        public ActionResult GetNotStartedProjects()
+        {
+            return Ok(_projectService.GetNotStartedProjects());
+        }
+
+        [HttpGet]
+        [Route("GetOnHoldProjects")]
+        public ActionResult GetOnHoldProjects()
+        {
+            return Ok(_projectService.GetOnHoldProjects());
+        }
+
+        [HttpGet]
+        [Route("GetCancelledProjects")]
+        public ActionResult GetCancelledProjects()
+        {
+            return Ok(_projectService.GetCancelledProjects());
+        }
+
+        [HttpGet]
+        [Route("GetFinishedProjects")]
+        public ActionResult GetFinishedProjects()
+        {
+            return Ok(_projectService.GetFinishedProjects());
         }
 
     }

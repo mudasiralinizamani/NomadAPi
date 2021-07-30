@@ -52,6 +52,31 @@ namespace NomadDashboardAPI.Services
             return _context.Projects.ToList();
         }
 
+        public IEnumerable<Project> GetCancelledProjects()
+        {
+            return _context.Projects.Where(x => x.Status == "cancelled");
+        }
+
+        public IEnumerable<Project> GetFinishedProjects()
+        {
+            return _context.Projects.Where(x => x.Status == "finished");
+        }
+
+        public IEnumerable<Project> GetInProgressProjects()
+        {
+            return _context.Projects.Where(x => x.Status == "inprogress");
+        }
+
+        public IEnumerable<Project> GetNotStartedProjects()
+        {
+            return _context.Projects.Where(x => x.Status == "notstarted");  
+        }
+
+        public IEnumerable<Project> GetOnHoldProjects()
+        {
+            return _context.Projects.Where(x => x.Status == "onhold");
+        }
+
         public Project GetProjectById(string id)
         {
             return _context.Projects.FirstOrDefault(x => x.Id == id);
